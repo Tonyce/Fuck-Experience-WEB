@@ -17,9 +17,12 @@
 			var infoObj = JSON.parse(req.response);
 			var name = infoObj.login;
 			var image = infoObj.avatar_url;
-			// localStorage
-			document.cookie = "name="+name+"; image=" + image + "; path=/";
+			
+			document.cookie = "name=" + name + "; path=/";
+			document.cookie = "image=" + image + "; path=/";
+			alert(document.cookie)
 			localStorage.setItem('name', name);
+			// localStorage
 			// localStorage.setItem('image', image);
 			alert(document.cookie)
 
