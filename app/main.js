@@ -46,7 +46,7 @@ class SingIn extends React.Component {
 		window.addEventListener('storage', (e) => {
 
 			cookieObj = parseCookie()
-
+			console.log(cookieObj);
 			if (cookieObj.name && cookieObj.image) {
 				this.setState ({
 					name: cookieObj.name,
