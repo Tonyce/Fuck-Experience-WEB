@@ -49,9 +49,9 @@ class Footer extends React.Component {
 					<div id="foot-info" className="flex-layout flex-end">
 						<a href="/ttblog">我的Blog</a>
 						<a href="https://github.com/Tonyce">我的Github</a>
-						<a href="https://github.com/Tonyce/relearn-react">源码</a>
+						<a href="https://github.com/Tonyce/Fuck-Experience-WEB">源码</a>
 					</div>
-					<h2>React GO ON</h2>
+					<h2>努力，只为不一样的自己；努力，只因吹过牛B</h2>
 				</div>
 			</footer>
 		);
