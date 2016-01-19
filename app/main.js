@@ -107,7 +107,7 @@ class Nav extends React.Component {
 		return (
 			<nav className="flex-layout h-center v-between">
 				<div>
-					<Link className="center" to="/">INDEX</Link>
+					<Link className="center" to="/">FuckExperience</Link>
 				</div>
 				<div className="center">
 					<Link className="center" to="/about" activeClassName='animate' 
