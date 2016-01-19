@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>auth</title>
+</head>
+<body>
+	authing...
+<script type="text/javascript">
+
+</script>
+<script type="text/javascript">
+	var req = new XMLHttpRequest()
+	req.onload = function () {
+		if (req.status === 404) {
+			alert("404")
+		} else {
+			var infoObj = JSON.parse(req.response);
+			var name = infoObj.login;
+			var image = infoObj.avatar_url;
+			// localStorage
+			document.cookie = "name="+name+"; image=" + image + "; path=/";
+			localStorage.setItem('name', name);
+			// localStorage.setItem('image', image);
+		}
+		window.close();
+	}
+	var search = location.search;
+	var url = '/fuckexperience/api/github/accessToken'+search
+	req.open('GET', url)
+	req.send()
+</script>
+</body>
+</html>

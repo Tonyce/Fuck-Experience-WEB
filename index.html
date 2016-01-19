@@ -1,0 +1,119 @@
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<title>fuck ∞ experience</title>
+		<style>
+			* {
+				margin: 0; padding: 0;
+				font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+			}
+
+			ul {
+				list-style:none;
+			}
+
+			ul li {
+				min-height: 50px;
+				width: 50%;
+				font-size: 1.2em;
+				cursor: pointer;
+				display: flex;
+      			/*justify-content: center;*/
+
+    			box-shadow: 0 1px 3px 0px #E4E3E3;
+      			margin: 15px 0;
+      			padding: 10px 0;
+
+		      	transition-property: background, border-radius, box-shadow, color, border-left;
+				transition-duration: 0.3s;
+				transition-timing-function: linear;
+				border-left: 2px solid #42A5F5;
+			}
+
+			ul li:hover {
+				box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.16), 0 2px 10px 0 rgba(0, 0, 0, 0.12); 
+				border-left: 15px solid #42A5F5;
+				border-radius:0 5px 5px 0;
+			}
+
+			.blogContainer {
+				padding-left: 10px;
+			}
+
+			.content {
+
+				padding: 20px;
+			}
+
+			.shadow-bar {
+				min-height: 100px;
+			}
+			.my-bar {
+				color: #fff;
+				position: fixed;
+				padding-left: 20px;
+				width: 100%;
+				background: #00bcd4;
+			}
+
+			@media screen and (max-width: 1450px) {
+
+				ul li {
+					width: 70%;
+				}
+			}
+
+			@media screen and (max-width: 760px) {
+				.my-bar {
+					padding-left:10px
+				}
+
+				ul li {
+					width: 90%;
+
+				}
+			}
+
+			@media screen and (max-width: 460px) {
+				ul li {
+					width: 100%;
+					/*box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.16), 0 2px 10px 0 rgba(0, 0, 0, 0.12);*/
+				}
+
+				ul li:hover {
+					border-left: 2px solid #42A5F5;
+				}
+			}
+		</style>
+	</head>
+	<body>
+	<svg style="position: absolute; width: 0; height: 0;" width="0" height="0" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+	<defs>
+	<symbol id="icon-more_vert" viewBox="0 0 1024 1024">
+	<title>more_vert</title>
+	<path class="path1" d="M512 682q34 0 60 26t26 60-26 60-60 26-60-26-26-60 26-60 60-26zM512 426q34 0 60 26t26 60-26 60-60 26-60-26-26-60 26-60 60-26zM512 342q-34 0-60-26t-26-60 26-60 60-26 60 26 26 60-26 60-60 26z"></path>
+	</symbol>
+	</defs>
+	</svg>
+		<div id="app"></div>
+		<script src="build/bundle.js"></script>
+		<script type="text/javascript">
+			function parseCookie (){
+				var cookieObjs = document.cookie.split(";");
+
+				var cookieObj = {};
+
+				for (var i = 0; i < cookieObjs.length; i++) {
+					var searchObjStr = cookieObjs[i];
+					var key = searchObjStr.split("=")[0];
+					key = key.replace(/\s+/g,'');
+					var value = searchObjStr.split("=")[1];
+					cookieObj[key] = value;
+				};
+				return cookieObj
+			}
+		</script>
+	</body>
+
+</html>
