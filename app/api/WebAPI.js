@@ -8,6 +8,21 @@ class WebAPI {
 
 	}
 
+	login(url, callback) {
+		const req = new XMLHttpRequest()
+		req.onload = function () {
+			let data = ""
+			if (req.status === 404) {
+				
+			} else {
+				data = req.response;
+			}
+			callback(data);
+		}
+		req.open("GET", url);
+		req.send("");
+	}
+
 	loadMainData(url, method, body) {
 		const req = new XMLHttpRequest()
 		req.onload = function () {

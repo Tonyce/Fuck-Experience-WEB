@@ -9,6 +9,7 @@
 
 </script>
 <script type="text/javascript">
+(function  () {
 	var req = new XMLHttpRequest()
 	req.onload = function () {
 		if (req.status === 404) {
@@ -18,14 +19,13 @@
 			var name = infoObj.login;
 			var image = infoObj.avatar_url;
 			
-			document.cookie = "name=" + name + "; path=/";
-			document.cookie = "image=" + image + "; path=/";
+			document.cookie = "name=" + name + "; path=/fuckexperience";
+			document.cookie = "image=" + image + "; path=/fuckexperience";
 			// alert(document.cookie)
-			localStorage.setItem('name', name);
+			localStorage.setItem('login', true);
 			// localStorage
 			// localStorage.setItem('image', image);
 			// alert(document.cookie)
-
 		}
 		window.close();
 	}
@@ -33,6 +33,7 @@
 	var url = '/fuckexperience/api/github/accessToken'+search
 	req.open('GET', url)
 	req.send()
+})()
 </script>
 </body>
 </html>

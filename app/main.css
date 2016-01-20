@@ -33,12 +33,14 @@ header {
 .circle {
   position: absolute;
   background-color: #607D8B;
+  /*top: 0px;*/
+  /*left: 1120px;*/
   width: 0px;
   height: 0px;
   margin-left: 0;
   margin-top: 0;
   border-radius: 50%;
-  webkit-user-select: none;
+  -webkit-user-select: none;
   -moz-user-select: none;
   -ms-user-select: none;
 }
@@ -74,8 +76,18 @@ nav div {
   width: 40px;
   border-radius: 50%; 
 }
+
+.user-info div {
+  margin-top: 4px;
+}
+
 .user-info a {
   padding: 0;
+}
+
+.info-card {
+  width: 300px;
+  height: 180px;
 }
 
 .header-nav {

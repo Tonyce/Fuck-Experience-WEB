@@ -18,6 +18,15 @@ import ScheduleItem from './components/schedule/Item';
 
 import Footer from './components/Footer';
 
+import IconButton from 'material-ui/lib/icon-button';
+import IconMenu from 'material-ui/lib/menus/icon-menu';
+import MoreVertIcon from 'material-ui/lib/svg-icons/navigation/more-vert';
+import MenuItem from 'material-ui/lib/menus/menu-item';
+import injectTapEventPlugin from 'react-tap-event-plugin';
+injectTapEventPlugin();
+
+import WebAPI from './api/WebAPI'
+
 import './main.css'
 
 
@@ -34,19 +43,42 @@ class SingIn extends React.Component {
 
 
 	componentDidMount() {
+
+		// check token
+
+		// tong guo token huo qu token zhong de shu ju bing she zhi cookie
+		WebAPI.login( "api/login", data => {
+			var loginObj = {}
+			try {
+				loginObj = JSON.parse(data)
+			}catch(e) {
+				alert(e)
+			}
+			var userName = loginObj.userName || "";
+			var image = loginObj.image || "";
+			document.cookie = "name=" + userName + "; path=/fuckexperience";
+			document.cookie = "image=" + image + "; path=/fuckexperience"
+			this.shouldBeLogin()	
+		})
+	}
+
+	shouldBeLogin() {
 		let cookieObj = parseCookie()
 		if (cookieObj.name && cookieObj.image) {
 			this.setState ({
 				name: cookieObj.name,
 				src: cookieObj.image
 			})
+
+			localStorage.setItem('login', true);
+		}else {
+			localStorage.setItem('login', false);	
 		}
-
-		localStorage.setItem('name', "");
+		
 		window.addEventListener('storage', (e) => {
-
+			// console.log(e);
 			cookieObj = parseCookie()
-			console.log(cookieObj);
+			// console.log(cookieObj);
 			if (cookieObj.name && cookieObj.image) {
 				this.setState ({
 					name: cookieObj.name,
@@ -56,17 +88,59 @@ class SingIn extends React.Component {
 		})
 	}
 
+	componentWillUnmount() {
+		console.log("WillUnmount")
+	    // mainStore.removeChangeListener( this._onChange );
+	}
+
+	singOut() {
+
+		WebAPI.login( "api/logout", data => {
+			var loginObj = {}
+			try {
+				loginObj = JSON.parse(data)
+			}catch(e) {
+				alert(e)
+			}
+			var userName = loginObj.userName || "";
+			var image = loginObj.image || "";
+			document.cookie = "name=" + userName + "; path=/fuckexperience";
+			document.cookie = "image=" + image + "; path=/fuckexperience"
+			// this.shouldBeLogin()	
+			localStorage.setItem('login', false);
+			this.setState ({
+				name: userName,
+				src: image
+			})
+		})
+	}
+
 	render() {
 		let name = this.state.name;
 		let src = this.state.src;
 		// alert(src);
+		// <IconMenu
+		// 	iconButtonElement={
+		// 		<IconButton><MoreVertIcon /></IconButton>
+		// 	}
+		// 	targetOrigin={{horizontal: 'right', vertical: 'top'}}
+		// 	anchorOrigin={{horizontal: 'right', vertical: 'top'}}
+		// 	>
+		// 	<div className="info-card">
+		// 		<MenuItem primaryText="Sign out" />
+		// 	</div>
+		// </IconMenu>
 		if (name) {
 			return (
 				<div className="user-info center">
+					<a className="center">消息&nbsp;&nbsp;</a>
 					<img src={this.state.src} />
-					<a className="center" > 
+					<span className="center" > 
 						{name}
-					</a>
+					</span>
+					<a className="center" onClick={ ()=>this.singOut() }>
+						&nbsp;&nbsp;&nbsp;&nbsp;QUIT
+					</a>					
 				</div>
 			)
 		}else {
