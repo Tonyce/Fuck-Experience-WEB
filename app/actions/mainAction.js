@@ -12,7 +12,7 @@ class MainAction {
 	}
 
 	loadAboutData() {
-		this.loadData("api/about", "GET", "");
+		this.loadData("api/topic", "GET", "");
 	}
 
 	loadScheduleData(item) {

@@ -8,17 +8,20 @@ import { browserHistory, Router, IndexRoute, IndexRedirect, Route, Link } from '
 
 
 import IndexHeader from './components/index/Header';
-import AboutHeader from './components/about/Header';
+import TopicHeader from './components/topic/Header';
 import ScheduleHeader from './components/schedule/Header';
 
 import IndexMain from './components/index/Main';
-import AboutMain from './components/about/Main';
+import TopicMain from './components/topic/Main';
 import ScheduleMain from './components/schedule/Main';
 import ScheduleItem from './components/schedule/Item';
 
+import Message from './components/Message';
 import SelfInfo from './components/SelfInfo';
 
 import Footer from './components/Footer';
+
+import topicStore from './stores/topicStore';
 
 // import IconButton from 'material-ui/lib/icon-button';
 // import IconMenu from 'material-ui/lib/menus/icon-menu';
@@ -200,9 +203,9 @@ class Nav extends React.Component {
 					<Link className="center" to="/">FuckExperience</Link>
 				</div>
 				<div className="center">
-					<Link className="center" to="/about" activeClassName='animate' 
+					<Link className="center" to="/topic" activeClassName='animate' 
 						onClick={ this.changeHeader.bind(this) }>
-						ABOUT
+						TOPIC
 					</Link>
 					<Link className="center" to="/schedule" activeClassName='animate' 
 						onClick={ (event) => this.changeHeader(event) }>
@@ -226,20 +229,41 @@ class Header extends React.Component {
 
 	constructor() {
 		super();
+		this._changeToLittle = this._changeToLittle.bind(this);
 		this.state = {
 			bg: "#00BCD4",
-			animateStyle: {}
+			animateStyle: {},
+			headerStyle: {}
 		}
 	}
 
 	componentDidMount() {
-
+		topicStore.addChangeListener( this._changeToLittle );
 	}
+
+	
 	
 	componentWillMount() {
+		topicStore.removeChangeListener( this._changeToLittle );
 		this.stepTime = 20;
 		this.docBody = document.body;
 		this.focElem = document.documentElement;
+	}
+
+	_changeToLittle(onOff) {
+		if (onOff === "open") {
+			this.setState( {
+				headerStyle: {
+					height: "100px"
+				}
+			})
+		}
+
+		if (onOff === "close") {
+			this.setState( {
+				headerStyle: {}
+			})
+		}
 	}
 
 	animatedCircle (x, y , bg, speed) {
@@ -269,6 +293,7 @@ class Header extends React.Component {
 		let timer = setTimeout(() => {
 			this.setState({
 				bg: bg,
+				headerStyle: { backgroundColor: bg},
 				animateStyle: {},
 				headerNav: {
 					opacity: 1.0
@@ -279,6 +304,8 @@ class Header extends React.Component {
 	}
 
 	changeBg(event) {
+		// console.log("nav")
+		// console.log(event)
 		this.setState({
 			headerNav: {
 				opacity: 0.0
@@ -290,7 +317,7 @@ class Header extends React.Component {
 
 	render() {
 		return (
-			<header id="header" style={{ backgroundColor: this.state.bg}}>
+			<header id="header" style={ this.state.headerStyle }>
 				<Nav changeHeader={ (event) => this.changeBg(event) }/>
 				<div className="header-nav">
 					{ this.props.children }
@@ -334,14 +361,14 @@ ReactDOM.render((
 	<Router history={browserHistory}>
 		<Route path="/" component={App}>
 			<IndexRoute components={{ main: IndexMain }}></IndexRoute>
-			<Route path="about" components={{ header: AboutHeader, main: AboutMain }}></Route>
+			<Route path="topic" components={{ header: TopicHeader, main: TopicMain }}></Route>
 			<Route path="schedule" components={{ header: ScheduleHeader, main: ScheduleMain }}>
 				<IndexRedirect to="day1" />
 				<Route path=":item" component={ScheduleItem} />
 			</Route>
 
 			<Route path="selfAbout" components={{ main: SelfInfo }}></Route>
-			<Route path="message" components={{ header: AboutHeader, main: AboutMain }}></Route>
+			<Route path="message" components={{ main: Message }}></Route>
 		</Route>
 	</Router>
 ), document.getElementById('app'))
