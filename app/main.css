@@ -227,12 +227,44 @@ nav a.animate:before, .header-nav a.animate:before {
     background: #0000ff;
 }
 
-.schedule {
+.schedule, .timeline{
   width: 70%;
   height: 500px;
   margin: 20px auto;
   background-color: #fff;
   box-shadow: 0px 2px 5px 0px rgba(0,0,0,0.16),0px 2px 5px 0px rgba(0,0,0,0.23);
+}
+
+
+.timeline h2 {
+  padding: 15px 20px;
+  color: gray;
+  border-bottom: solid 1px #E0E0E0;
+}
+
+.timeline .item {
+  padding: 0 20px;
+  min-height: 60px;
+}
+
+.item div {
+  margin: 0 20px 0 0;
+}
+
+.item>div:nth-child(1) {
+  width: 25px;
+  margin-right: 10px;
+}
+
+.item .time {
+  min-width: 100px;
+  margin: 0;
+}
+.item .dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background-color: gray;
 }
 
 .card {
@@ -261,6 +293,17 @@ nav a.animate:before, .header-nav a.animate:before {
   /*position: relative;*/
   height: 60px;
   flex-grow:0;
+}
+
+.self-info {
+  background-color: cornsilk;
+  position: relative;
+  z-index: 100;
+  width: 70%;
+  margin: 0 auto 20px auto;
+
+  min-height: 500px;
+  box-shadow: 0px 2px 5px 0px rgba(0,0,0,0.16),0px 2px 5px 0px rgba(0,0,0,0.23);
 }
 
 footer {

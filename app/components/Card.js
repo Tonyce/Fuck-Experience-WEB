@@ -16,7 +16,7 @@ class Card extends React.Component {
 
 	componentWillReceiveProps (nextProps) {
 		let cardContent = nextProps.children;
-		cardContent = JSON.parse(cardContent);
+
 		this.setState({
 			content: cardContent.content,
 			other: cardContent.other

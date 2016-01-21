@@ -16,14 +16,16 @@ import AboutMain from './components/about/Main';
 import ScheduleMain from './components/schedule/Main';
 import ScheduleItem from './components/schedule/Item';
 
+import SelfInfo from './components/SelfInfo';
+
 import Footer from './components/Footer';
 
-import IconButton from 'material-ui/lib/icon-button';
-import IconMenu from 'material-ui/lib/menus/icon-menu';
-import MoreVertIcon from 'material-ui/lib/svg-icons/navigation/more-vert';
-import MenuItem from 'material-ui/lib/menus/menu-item';
-import injectTapEventPlugin from 'react-tap-event-plugin';
-injectTapEventPlugin();
+// import IconButton from 'material-ui/lib/icon-button';
+// import IconMenu from 'material-ui/lib/menus/icon-menu';
+// import MoreVertIcon from 'material-ui/lib/svg-icons/navigation/more-vert';
+// import MenuItem from 'material-ui/lib/menus/menu-item';
+// import injectTapEventPlugin from 'react-tap-event-plugin';
+// injectTapEventPlugin();
 
 import WebAPI from './api/WebAPI'
 
@@ -48,14 +50,14 @@ class SingIn extends React.Component {
 
 		// tong guo token huo qu token zhong de shu ju bing she zhi cookie
 		WebAPI.login( "api/login", data => {
-			var loginObj = {}
+			let loginObj = {}
 			try {
 				loginObj = JSON.parse(data)
 			}catch(e) {
 				alert(e)
 			}
-			var userName = loginObj.userName || "";
-			var image = loginObj.image || "";
+			let userName = loginObj.userName || "";
+			let image = loginObj.image || "";
 			document.cookie = "name=" + userName + "; path=/fuckexperience";
 			document.cookie = "image=" + image + "; path=/fuckexperience"
 			this.shouldBeLogin()	
@@ -112,7 +114,17 @@ class SingIn extends React.Component {
 				name: userName,
 				src: image
 			})
+			location.href = "/fuckexperience"
 		})
+	}
+
+	changeHeader(event) {
+		// alert("changeHeader")
+		// console.log("nav")
+		// console.log(event)
+		if (this.props.changeHeader) {
+			this.props.changeHeader(event);
+		}
 	}
 
 	render() {
@@ -133,11 +145,15 @@ class SingIn extends React.Component {
 		if (name) {
 			return (
 				<div className="user-info center">
-					<a className="center">消息&nbsp;&nbsp;</a>
+					<Link className="center" to="/message" activeClassName='animate'
+						onClick={ (event) => this.changeHeader(event) }>
+						&nbsp;&nbsp;消息&nbsp;&nbsp;
+					</Link>
 					<img src={this.state.src} />
-					<span className="center" > 
+					<Link className="center" to="/selfAbout" activeClassName='animate'
+						onClick={ (event) => this.changeHeader(event) }>
 						{name}
-					</span>
+					</Link>
 					<a className="center" onClick={ ()=>this.singOut() }>
 						&nbsp;&nbsp;&nbsp;&nbsp;QUIT
 					</a>					
@@ -193,7 +209,7 @@ class Nav extends React.Component {
 						SCHEDULE
 					</Link>
 
-					<SingIn />
+					<SingIn changeHeader={ (event) => this.changeHeader(event) }/>
 				</div>	
 
 				
@@ -323,6 +339,9 @@ ReactDOM.render((
 				<IndexRedirect to="day1" />
 				<Route path=":item" component={ScheduleItem} />
 			</Route>
+
+			<Route path="selfAbout" components={{ main: SelfInfo }}></Route>
+			<Route path="message" components={{ header: AboutHeader, main: AboutMain }}></Route>
 		</Route>
 	</Router>
 ), document.getElementById('app'))

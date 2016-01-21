@@ -32,8 +32,13 @@ class Main extends React.Component {
 	}
 
 	_onChange() {
+		let scheduleContent = mainStore.getMainData();
+		scheduleContent = JSON.parse(scheduleContent);
+
+		let cardContent = scheduleContent.card;
+		
 		this.setState({ 
-			card: mainStore.getMainData()
+			card: cardContent
 		}); 
 	}
 

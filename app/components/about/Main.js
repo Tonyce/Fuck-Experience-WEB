@@ -32,8 +32,14 @@ class Main extends React.Component {
 	}
 
 	_onChange() {
+
+		let aboutContent = mainStore.getMainData();
+		aboutContent = JSON.parse(aboutContent);
+
+		let cardContent = aboutContent.card;
+		
 		this.setState({ 
-			card: mainStore.getMainData()
+			card: cardContent
 		}); 
 	}
 
