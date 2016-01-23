@@ -60,7 +60,9 @@ class Main extends React.Component {
 			topics: [1,2,3,4,5,6,7],
 			topicStyle: {},
 			animateTopic: "topicA",
-			cardDisplay: "block"
+			cardDisplay: "block",
+			topicTitle: "",
+			titileStyle: {}
 		}
 	}
 
@@ -87,7 +89,7 @@ class Main extends React.Component {
 	}
 
 	openTopic(event) {
-		// console.log(event);
+		// console.log();
 		let rect = event.target.getBoundingClientRect();
 		// console.log(rect);
 		this.rect = rect;
@@ -97,6 +99,7 @@ class Main extends React.Component {
 		}
 
 		this.setState( {
+			topicTitle: event.target.innerText,
 			topicStyle: topicStyle
 		})
 
@@ -114,7 +117,11 @@ class Main extends React.Component {
 		let hidenTimer = setTimeout( () => {
 			clearTimeout(hidenTimer)
 			this.setState( {
-				cardDisplay: "none"
+				cardDisplay: "none",
+				titileStyle: {
+					position: 'fixed',
+					boxShadow: '0 2px 5px 0 rgba(0,0,0,.16)'
+				}
 			})
 		}, 300)
 
@@ -129,11 +136,12 @@ class Main extends React.Component {
 				top: rect.top + document.body.scrollTop
 			},
 			cardDisplay: "block",
-			animateTopic: "topicA"
+			animateTopic: "topicA",
+			titileStyle: {}
 		})
 
-		let hidenTimer = setTimeout( () => {
-			clearTimeout(hidenTimer)
+		let timer = setTimeout( () => {
+			clearTimeout(timer)
 			this.setState( {
 				topicStyle: {
 					left: rect.left - 20,
@@ -161,13 +169,50 @@ class Main extends React.Component {
 						})}
 					</div>
 					<div className="flex-layout h-center">
-						<a>MORE>></a>
+						<a>MORE&nbsp;>></a>
 					</div>
 				</div>
+
+
 				<div style={this.state.topicStyle} 
-					className={this.state.animateTopic}
-					onClick={ (e) => this.closeTopic(e) }>
-					topic
+					className={this.state.animateTopic} >
+					<div className="topic-title flex-layout h-center v-between" style={this.state.titileStyle}>
+						<div className="flex-layout h-center">
+
+							<img src="https://avatars.githubusercontent.com/u/7351139?v=3" />
+							<author>Tonyce</author>
+
+							<topictitle>{this.state.topicTitle}</topictitle>
+							
+						</div>
+						<div className="close-topic" onClick={ (e) => this.closeTopic(e) } >
+							X
+						</div>
+					</div>
+					<div className="topic-content">
+						<h1>ds</h1>
+						<h1>ds</h1>
+						<h1>ds</h1>
+						<h1>ds</h1>
+						<h1>ds</h1>
+						<h1>ds</h1>
+						<h1>ds</h1>
+						<h1>ds</h1>
+						<h1>ds</h1>
+						<h1>ds</h1>
+						<h1>ds</h1>
+						<h1>ds</h1>
+						<h1>ds</h1>
+						<h1>ds</h1>
+						<h1>ds</h1>
+						<h1>ds</h1>
+						<h1>ds</h1>
+						<h1>ds</h1>
+						<h1>ds</h1>
+						<h1>ds</h1>
+						<h1>ds</h1>
+
+					</div>
 				</div>
 			</div>
 		);
