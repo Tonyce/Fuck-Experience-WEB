@@ -231,7 +231,6 @@ class Header extends React.Component {
 
 	constructor() {
 		super();
-		this._changeToLittle = this._changeToLittle.bind(this);
 		this.state = {
 			bg: "#00BCD4",
 			animateStyle: {},
@@ -240,32 +239,16 @@ class Header extends React.Component {
 	}
 
 	componentDidMount() {
-		topicStore.addChangeListener( this._changeToLittle );
+		// topicStore.addChangeListener( this._changeToLittle );
 	}
 
 	
 	
 	componentWillMount() {
-		topicStore.removeChangeListener( this._changeToLittle );
+		// topicStore.removeChangeListener( this._changeToLittle );
 		this.stepTime = 20;
 		this.docBody = document.body;
 		this.focElem = document.documentElement;
-	}
-
-	_changeToLittle(onOff) {
-		if (onOff === "open") {
-			this.setState( {
-				headerStyle: {
-					height: "100px"
-				}
-			})
-		}
-
-		if (onOff === "close") {
-			this.setState( {
-				headerStyle: {}
-			})
-		}
 	}
 
 	animatedCircle (x, y , bg, speed) {

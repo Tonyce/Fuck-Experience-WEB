@@ -341,6 +341,19 @@ nav a.animate:before, .header-nav a.animate:before {
   cursor: pointer;
 }
 
+.topic a {
+  flex-grow:6;
+}
+
+.topic author {
+  flex-grow:2;
+}
+
+.topic div {
+  flex-grow:2; 
+}
+
+
 .topic-title {
   height: 60px;
   width: 100%;

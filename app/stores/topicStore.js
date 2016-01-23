@@ -3,9 +3,7 @@
 import EventEmitter from 'events';
 // import smallAppDispatcher from '../dispatcher/smallAppDispatcher'
 
-// const CHANGE_EVENT = 'change';
-
-const OPEN_TOPIC = "openTopic";
+// const OPEN_TOPIC = "changeHeader";
 
 // var mainData = "";
 
@@ -14,16 +12,20 @@ class Store extends EventEmitter {
 		super();
 	}
 
-	openTopic(onOff) {
-		this.emit(OPEN_TOPIC, onOff)
+	// openTopic(onOff) {
+	// 	this.emit(OPEN_TOPIC, onOff)
+	// }
+
+	changeHeader(value) {
+		this.emit("changeHeader", value)	
 	}
 
-	addChangeListener(callback) {
-		this.on(OPEN_TOPIC, callback);
+	addChangeListener(eventName, callback) {
+		this.on(eventName, callback);
 	}
 
-	removeChangeListener(callback) {
-		this.removeListener(OPEN_TOPIC, callback)
+	removeChangeListener(eventName, callback) {
+		this.removeListener(eventName, callback)
 	}
 }
 
