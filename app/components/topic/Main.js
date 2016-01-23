@@ -3,44 +3,37 @@
 
 import React from 'react';
 import {render} from 'react-dom';
+import { Link } from 'react-router';
 import Card from '../Card';
 
 import mainStore from '../../stores/mainStore';
 import mainAction from '../../actions/mainAction';
 
 import topicStore from '../../stores/topicStore';
+import WebAPI from '../../api/WebAPI'
  
 
 class TopicItem extends React.Component {
 
 	constructor(props) {
 		super(props);
-
-		this.state = {
-			id: props.topic
-		}
 	}
 
 	openTopic(event) {
-		// alert(`openTopic ${this.state.id}`);
-		topicStore.openTopic("open");
-		// console.log("openTopic")
-		// let rect = event.target.getBoundingClientRect();
-		// console.log(rect);
-		// console.log(event.target.clientWidth);
-		// console.log(event.target.clientHeight);
-		// console.log(event.target.scrollTop);
-		// console.log(event.target.scrollLeft);
-		// alert(`${event.pageX}, ${event.pageY}`)
-		if (this.props.openTopic) {
-			this.props.openTopic(event);
-		}
+		// topicStore.openTopic("open");
+		// if (this.props.openTopic) {
+		// 	this.props.openTopic(event, this.props.topic);
+		// }
+		<Link to="topic/id" />
 	}
 
 	render() {
+		let topic = this.props.topic;
 		return (
 			<div className="topic flex-layout h-center" onClick={(event)=>this.openTopic(event)}>
-				{this.props.topic}
+				<div>{topic.title}</div>
+				<div>{topic.authorName}</div>
+				<div>{topic.time}</div>
 			</div>
 		)
 	}
@@ -57,39 +50,79 @@ class Main extends React.Component {
 		this._onChange = this._onChange.bind(this);
 		this.rect = "";
 		this.state = {
-			topics: [1,2,3,4,5,6,7],
+			topics: [],
 			topicStyle: {},
 			animateTopic: "topicA",
 			cardDisplay: "block",
 			topicTitle: "",
-			titileStyle: {}
+			topicContent: "loading",
+			titileStyle: {},
+			topicOpened: false,
+			showTitle: "none"
 		}
 	}
 
 	componentDidMount() {
-		// console.log("about didMount")
-		
+
+		let ATopic = document.getElementById('ATopic');
+		ATopic.onscroll = this.topicScroll.bind(this);
 		mainStore.addChangeListener( this._onChange );
+		mainAction.loadTopicData();
 	}
 
 	componentWillUnmount() {
-		// console.log("about WillUnmount")
 	    mainStore.removeChangeListener( this._onChange );
 	}
+
 	_onChange() {
-
-		let aboutContent = mainStore.getMainData();
-		aboutContent = JSON.parse(aboutContent);
-
-		let cardContent = aboutContent.card;
-		
+		let topicContent = mainStore.getMainData();
+			topicContent = JSON.parse(topicContent);
+		// console.log(topicContent);
+		let cardContent = topicContent.card;
+		let topics = topicContent.topics;
 		this.setState({ 
-			card: cardContent
+			card: cardContent,
+			topics: topics
 		}); 
 	}
 
-	openTopic(event) {
-		// console.log();
+	topicScroll() {
+
+		// let ATopic = document.getElementById('ATopic');
+		// let scrollHeight = ATopic.scrollTop;
+		if ( this.state.topicOpened !== true ) {
+			return;
+		}
+
+		if ( (scrollHeight > 80)  ){
+			this.setState( {
+				showTitle: "block"
+			})
+		}else {
+			this.setState( {
+				showTitle: "none"
+			})
+		}
+	}
+
+	openTopic(event, itemProps) {
+		// console.log(itemProps);
+		let topicId = itemProps.id;
+		console.log(topicId);
+
+		WebAPI.login( `api/topic/${topicId}`, data => {
+			let loginObj = {}
+			try {
+				loginObj = JSON.parse(data)
+			}catch(e) {
+				alert(e)
+			}	
+			console.log(loginObj);
+			this.setState({
+				topicContent: loginObj.content
+			})
+		})
+
 		let rect = event.target.getBoundingClientRect();
 		// console.log(rect);
 		this.rect = rect;
@@ -99,7 +132,8 @@ class Main extends React.Component {
 		}
 
 		this.setState( {
-			topicTitle: event.target.innerText,
+			topicOpened: true,
+			topicTitle: itemProps.title,
 			topicStyle: topicStyle
 		})
 
@@ -131,6 +165,7 @@ class Main extends React.Component {
 		topicStore.openTopic("close");
 		let rect = this.rect
 		this.setState( {
+			topicOpened: false,
 			topicStyle: {
 				left: rect.left - 20,
 				top: rect.top + document.body.scrollTop
@@ -152,66 +187,36 @@ class Main extends React.Component {
 	}
 
 	newTopic() {
-		alert("newTopic");
+		this.newTopic = true;
 	}
 
 	render() {
+		let topics = this.state.topics ? this.state.topics : [];
+
+		if (this.props.children) {
+			return (
+					<div>
+						{this.props.children}
+					</div>
+				)
+		}
+
 		return (
 			<div>
 				<div className="card" style={{display:this.state.cardDisplay}}>
 					<div className="flex-layout h-center v-between">
 						<h3>大家都在说</h3>
-						<a onClick={(event) => this.newTopic(event) }>发布话题</a>
+						<Link className="center" to="topic/newTopic">
+							发布话题
+						</Link>
 					</div>
 					<div className="topics">
-						{this.state.topics.map((item, i) => {
-							return <TopicItem topic={item} key={i} openTopic={(event) => this.openTopic(event) }/>
+						{topics.map((item, i) => {
+							return <TopicItem topic={item} key={i} openTopic={(event, itemProps) => this.openTopic(event, itemProps) }/>
 						})}
 					</div>
 					<div className="flex-layout h-center">
 						<a>MORE&nbsp;>></a>
-					</div>
-				</div>
-
-
-				<div style={this.state.topicStyle} 
-					className={this.state.animateTopic} >
-					<div className="topic-title flex-layout h-center v-between" style={this.state.titileStyle}>
-						<div className="flex-layout h-center">
-
-							<img src="https://avatars.githubusercontent.com/u/7351139?v=3" />
-							<author>Tonyce</author>
-
-							<topictitle>{this.state.topicTitle}</topictitle>
-							
-						</div>
-						<div className="close-topic" onClick={ (e) => this.closeTopic(e) } >
-							X
-						</div>
-					</div>
-					<div className="topic-content">
-						<h1>ds</h1>
-						<h1>ds</h1>
-						<h1>ds</h1>
-						<h1>ds</h1>
-						<h1>ds</h1>
-						<h1>ds</h1>
-						<h1>ds</h1>
-						<h1>ds</h1>
-						<h1>ds</h1>
-						<h1>ds</h1>
-						<h1>ds</h1>
-						<h1>ds</h1>
-						<h1>ds</h1>
-						<h1>ds</h1>
-						<h1>ds</h1>
-						<h1>ds</h1>
-						<h1>ds</h1>
-						<h1>ds</h1>
-						<h1>ds</h1>
-						<h1>ds</h1>
-						<h1>ds</h1>
-
 					</div>
 				</div>
 			</div>
@@ -220,3 +225,26 @@ class Main extends React.Component {
 }
 
 export default Main
+
+/*
+
+<div style={this.state.topicStyle}  id="ATopic"  
+	className={this.state.animateTopic} >
+	<div className="topic-title flex-layout h-center v-between" style={this.state.titileStyle}>
+		<div className="flex-layout h-center">
+
+			<img src="https://avatars.githubusercontent.com/u/7351139?v=3" />
+			<author>Tonyce</author>
+
+			<h2 style={{display: this.state.showTitle}}>{this.state.topicTitle}</h2>
+			
+		</div>
+		<div className="close-topic" onClick={ (e) => this.closeTopic(e) } >
+			X
+		</div>
+	</div>
+	<div className="topic-content">
+		{this.state.topicContent}
+	</div>
+</div>
+*/

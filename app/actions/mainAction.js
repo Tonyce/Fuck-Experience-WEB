@@ -11,7 +11,7 @@ class MainAction {
 		this.loadData("api/index", "GET", "");
 	}
 
-	loadAboutData() {
+	loadTopicData() {
 		this.loadData("api/topic", "GET", "");
 	}
 

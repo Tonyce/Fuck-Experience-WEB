@@ -361,11 +361,6 @@ author {
   margin: 0 0 0 20px;
 }
 
-topictitle {
-  font-size: 1.3em;
-  font-weight: 900;
-}
-
 .close-topic {
   height: 40px;
   text-align: center;
@@ -382,7 +377,7 @@ topictitle {
 }
 
 .topic-content {
-  padding: 20px 50px 20px 120px;
+  padding: 100px 50px 20px 120px;
 }
 
 .self-info {

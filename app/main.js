@@ -13,6 +13,8 @@ import ScheduleHeader from './components/schedule/Header';
 
 import IndexMain from './components/index/Main';
 import TopicMain from './components/topic/Main';
+import NewTopic from './components/topic/New';
+import TopicInfo from './components/topic/Info';
 import ScheduleMain from './components/schedule/Main';
 import ScheduleItem from './components/schedule/Item';
 
@@ -304,8 +306,6 @@ class Header extends React.Component {
 	}
 
 	changeBg(event) {
-		// console.log("nav")
-		// console.log(event)
 		this.setState({
 			headerNav: {
 				opacity: 0.0
@@ -342,13 +342,8 @@ class App extends React.Component {
 					{header}
 				</Header>
 
-			 	<ReactCSSTransitionGroup
-					component="div"
-					transitionName="example"
-					transitionEnterTimeout={500}
-					transitionLeaveTimeout={500}>
-						{ main }
-				</ReactCSSTransitionGroup>
+			 	
+				{ main }
 
 				<Footer />
 				
@@ -361,7 +356,11 @@ ReactDOM.render((
 	<Router history={browserHistory}>
 		<Route path="/" component={App}>
 			<IndexRoute components={{ main: IndexMain }}></IndexRoute>
-			<Route path="topic" components={{ header: TopicHeader, main: TopicMain }}></Route>
+			<Route path="topic" components={{ header: TopicHeader, main: TopicMain }}>
+				<Route path="newTopic" component={NewTopic} />	
+				<Route path=":id" component={TopicInfo} />	
+			</Route>
+
 			<Route path="schedule" components={{ header: ScheduleHeader, main: ScheduleMain }}>
 				<IndexRedirect to="day1" />
 				<Route path=":item" component={ScheduleItem} />
