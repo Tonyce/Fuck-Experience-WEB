@@ -27,8 +27,10 @@ class New extends React.Component {
 
 	render() {
 		return (
-			<div className="card" onClick={ () => this.goBack() }>
-				NewTopic
+			<div className="card" >
+				<div onClick={ () => this.goBack() }>
+				X
+				</div>
 			</div>
 		);
 	}

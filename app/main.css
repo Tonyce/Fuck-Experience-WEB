@@ -336,21 +336,21 @@ nav a.animate:before, .header-nav a.animate:before {
   height: 50px;
   border-bottom: solid 1px #EEEEEE;
 }
-
+/*
 .topic:hover {
   cursor: pointer;
-}
+}*/
 
 .topic a {
-  flex-grow:6;
+  width: 60%;
 }
 
 .topic author {
-  flex-grow:2;
+  width: 20%;
 }
 
 .topic div {
-  flex-grow:2; 
+  flex-grow:1; 
 }
 
 

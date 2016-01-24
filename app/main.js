@@ -3,7 +3,7 @@
 
 import React from 'react';
 import ReactDOM from 'react-dom';
-import ReactCSSTransitionGroup from 'react-addons-css-transition-group';
+// import ReactCSSTransitionGroup from 'react-addons-css-transition-group';
 import { browserHistory, Router, IndexRoute, IndexRedirect, Route, Link } from 'react-router';
 
 
@@ -345,7 +345,7 @@ ReactDOM.render((
 			</Route>
 
 			<Route path="schedule" components={{ header: ScheduleHeader, main: ScheduleMain }}>
-				<IndexRedirect to="day1" />
+				<IndexRedirect to={new Date().getDay() + ""} />
 				<Route path=":item" component={ScheduleItem} />
 			</Route>
 

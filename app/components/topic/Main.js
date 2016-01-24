@@ -6,9 +6,7 @@ import {render} from 'react-dom';
 import { browserHistory, Router, Route, Link } from 'react-router'
 import Card from '../Card';
 
-import mainStore from '../../stores/mainStore';
-import mainAction from '../../actions/mainAction';
-
+import topicAction from '../../actions/topicAction';
 import topicStore from '../../stores/topicStore';
  
 
@@ -20,7 +18,6 @@ class TopicItem extends React.Component {
 
 	render() {
 		let topic = this.props.topic;
-		// <Link to={{ pathname: `topic/${topic.id}`, query: { showAge: true } }} >Bob With Query Params</Link>
 		return (
 			<div className="topic flex-layout h-center">
 				
@@ -40,33 +37,35 @@ class Main extends React.Component {
 		this._onChange = this._onChange.bind(this);
 		this.rect = "";
 		this.state = {
-			topics: [],
+			topics: topicStore.getTopics()
 		}
 	}
 
 	componentDidMount() {
-		mainStore.addChangeListener( this._onChange );
-		mainAction.loadTopicData();
+		topicStore.addChangeListener("GetTopics", this._onChange );
+		if (!this.props.children && (this.state.topics.length < 1)){
+			topicAction.loadTopicData();
+		}
 	}
 
 	componentWillUnmount() {
-	    mainStore.removeChangeListener( this._onChange );
+	    topicStore.removeChangeListener( "GetTopics", this._onChange );
 	}
 
 	_onChange() {
-		let topicContent = mainStore.getMainData();
-			topicContent = JSON.parse(topicContent);
-		// console.log(topicContent);
-		let cardContent = topicContent.card;
-		let topics = topicContent.topics;
+		let topics = topicStore.getTopics();
 		this.setState({ 
 			topics: topics
 		}); 
 	}
 
 	loadMore() {
-		alert("loadMore");
-		//get last maindata last topic id
+		let topicsLen = this.state.topics.length;
+		if (topicsLen > 0) {
+			let lastTopic = this.state.topics[topicsLen-1];
+			let lastId = lastTopic.id;
+			topicAction.loadTopicMore(lastId);
+		}
 	}
 
 	render() {

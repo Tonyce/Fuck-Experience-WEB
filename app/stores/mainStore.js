@@ -10,13 +10,6 @@ var mainData = "";
 class MainStore extends EventEmitter {
 	constructor() {
 		super();
-		// this.on('newListener', (event, listener) => {
-		// 	console.log('newListener', event);
-		// });
-
-		// this.on("removeListener", () => {
-		// 	console.log("removeListener");
-		// })
 	}
 
 	emitChange() {

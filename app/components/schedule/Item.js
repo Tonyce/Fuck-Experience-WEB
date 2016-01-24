@@ -3,7 +3,6 @@
 
 import React from 'react';
 import {render} from 'react-dom';
-import ReactCSSTransitionGroup from 'react-addons-css-transition-group';
 
 class Item extends React.Component {
 
