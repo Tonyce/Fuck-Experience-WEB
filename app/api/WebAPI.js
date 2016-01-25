@@ -24,7 +24,7 @@ class WebAPI {
 		req.send("");
 	}
 
-
+	//topic
 	loadTopicData(url, method, body) {
 		const req = new XMLHttpRequest()
 		req.onload = function () {
@@ -58,6 +58,25 @@ class WebAPI {
 		})
 	}
 
+	newTopic(body, callback){
+		// this.loadData("api/newTopic", "POST", body);
+		const req = new XMLHttpRequest()
+		req.onload = function () {
+			let data = ""
+			if (req.status === 404) {
+				
+			} else {
+				data = req.response;
+			}
+			// mainAction.receiveData(data);
+			callback(data);
+		}
+		req.open("POST", "api/topic/new")
+		console.log(JSON.stringify(body))
+		req.send(JSON.stringify(body));	
+	}
+
+	//main
 	loadMainData(url, method, body) {
 		const req = new XMLHttpRequest()
 		req.onload = function () {

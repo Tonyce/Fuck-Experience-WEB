@@ -307,6 +307,21 @@ nav a.animate:before, .header-nav a.animate:before {
   flex-grow:0;
 }
 
+.close {
+  align-self: flex-end;
+}
+
+.close:hover {
+  cursor: pointer;
+}
+
+.close div {
+  border: solid 1px gray;
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+}
+
 .topicA {
   opacity: 0;
   /*display: none;*/
@@ -457,5 +472,24 @@ footer div:nth-child(1) {
   opacity: 0.01;
   transform: translateY(100px);
   transition: all 500ms ease-in;
+}
+
+.btn, button {
+      /*margin: 5px 15px;*/
+    margin:0; 
+    padding:0; 
+    list-style-type:none;
+    width: 100px;
+    height: 30px;
+    text-align: center;
+    padding-top: 10px;
+    background-color: #2196F3;
+    color: white;
+    border-radius: 20px;
+    transition: all 0.2s linear;
+  }
+
+.btn:hover {
+  cursor: pointer;
 }
 

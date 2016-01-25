@@ -16,6 +16,10 @@ class Action {
 		this.loadData(`api/topic?id=${lastId}`, "GET", "");	
 	}
 
+	newTopic(body, callback) {
+		WebAPI.newTopic(body, callback);
+	}
+
 	loadOneTopic(id) {
 		WebAPI.loadTopic(id);	
 	}
