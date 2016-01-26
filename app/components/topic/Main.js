@@ -47,7 +47,8 @@ class Main extends React.Component {
 		this._onChange = this._onChange.bind(this);
 		this.rect = "";
 		this.state = {
-			topics: topicStore.getTopics()
+			topics: topicStore.getTopics(),
+			login: localStorage.login === "true" ? true : false
 		}
 	}
 
@@ -56,6 +57,11 @@ class Main extends React.Component {
 		if (!this.props.children && (this.state.topics.length < 1)){
 			topicAction.loadTopicData();
 		}
+		window.addEventListener('storage', (e) => {
+			this.setState( {
+				login: localStorage.login === "true" ? true : false
+			})
+		})
 	}
 
 	componentWillUnmount() {
@@ -89,26 +95,52 @@ class Main extends React.Component {
 			)
 		}
 
-		return (
-			<div>
-				<div className="card" >
-					<div className="flex-layout h-center v-between">
-						<h3>大家都在说</h3>
-						<Link className="center" to="topic/newTopic" >
-							发布话题
-						</Link>
-					</div>
-					<div className="topics">
-						{topics.map((item, i) => {
-							return <TopicItem topic={item} key={i} />
-						})}
-					</div>
-					<div className="flex-layout h-center">
-						<a onClick={ () => this.loadMore() }>MORE&nbsp;>></a>
+		//登陆后可发布
+		console.log(localStorage.login === "true");
+		if (this.state.login) {
+			return (
+				<div>
+					<div className="card" >
+						<div className="flex-layout h-center v-between">
+							<h3>大家都在说</h3>
+							<Link className="center" to="topic/newTopic" >
+								发布话题
+							</Link>
+						</div>
+						<div className="topics">
+							{topics.map((item, i) => {
+								return <TopicItem topic={item} key={i} />
+							})}
+						</div>
+						<div className="flex-layout h-center">
+							<a onClick={ () => this.loadMore() }>MORE&nbsp;>></a>
+						</div>
 					</div>
 				</div>
-			</div>
-		);
+			)
+		}else {
+
+			return (
+				<div>
+					<div className="card" >
+						<div className="flex-layout h-center v-between">
+							<h3>大家都在说</h3>
+							<a className="center" href="/fuckexperience/api/github" target="_blank" >
+								登陆发布话题
+							</a>
+						</div>
+						<div className="topics">
+							{topics.map((item, i) => {
+								return <TopicItem topic={item} key={i} />
+							})}
+						</div>
+						<div className="flex-layout h-center">
+							<a onClick={ () => this.loadMore() }>MORE&nbsp;>></a>
+						</div>
+					</div>
+				</div>
+			);
+		}
 	}
 }
 export default Main

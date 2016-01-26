@@ -47,7 +47,7 @@ class Header extends React.Component {
 	render() {
 		if (this.state.author) {
 			return (
-				<div>
+				<div className="header-nav">
 					<h2>{this.state.title}</h2>
 					<div className="header-as flex-layout h-center">
 						<span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
@@ -61,7 +61,7 @@ class Header extends React.Component {
 			)
 		}else {
 			return (
-				<div>
+				<div className="header-nav">
 					<h2>{this.state.title}</h2>
 				</div>
 			)

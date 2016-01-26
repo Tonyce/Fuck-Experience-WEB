@@ -59,7 +59,7 @@ class Header extends React.Component {
 		let weekNum = this.weeks();
 		let year = new Date().getFullYear();
 		return (
-			<div>
+			<div className="header-nav">
 				<h3>Schdule&nbsp;&nbsp;&nbsp;[&nbsp;{year}&nbsp;第{weekNum}周&nbsp;]</h3>
 				<div className="header-as flex-layout h-center ">
 					<Link to="schedule/1" className="center" activeClassName='animate'>星期一</Link>

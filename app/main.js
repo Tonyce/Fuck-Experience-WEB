@@ -302,9 +302,7 @@ class Header extends React.Component {
 		return (
 			<header id="header" style={ this.state.headerStyle }>
 				<Nav changeHeader={ (event) => this.changeBg(event) }/>
-				<div className="header-nav">
-					{ this.props.children }
-				</div>
+				{ this.props.children }
 				<div className="circle" style={this.state.animateStyle}></div>
 			</header>
 		)
@@ -338,7 +336,7 @@ class App extends React.Component {
 ReactDOM.render((
 	<Router history={browserHistory}>
 		<Route path="/" component={App}>
-			<IndexRoute components={{ main: IndexMain }}></IndexRoute>
+			<IndexRoute components={{ header: IndexHeader, main: IndexMain }}></IndexRoute>
 			<Route path="topic" components={{ header: TopicHeader, main: TopicMain }}>
 				<Route path="newTopic" component={NewTopic} />	
 				<Route path=":id" component={TopicInfo} />	
