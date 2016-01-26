@@ -16,14 +16,24 @@ class TopicItem extends React.Component {
 		super(props);
 	}
 
+	formatTime(time) {
+		let date = new Date(time)
+		return date.toLocaleString()
+	}
+
 	render() {
 		let topic = this.props.topic;
+		let author = JSON.stringify(topic.author);
+		let time = this.formatTime(topic.time);
 		return (
 			<div className="topic flex-layout h-center">
 				
-				<Link to={`topic/${topic.id}`} query={{ title: topic.title }}>{topic.title}</Link>	
-				<author>{topic.authorName}</author>
-				<div>{topic.time}</div>
+				<Link to={`topic/${topic._id}`} query={{ title: topic.title, author: author }}>{topic.title}</Link>	
+				<author className="flex-layout h-center">
+					<img src={topic.author.image} />
+					&nbsp;&nbsp;&nbsp;{topic.author.name}
+				</author>
+				<time>{time}</time>
 			</div>
 		)
 	}
@@ -63,7 +73,7 @@ class Main extends React.Component {
 		let topicsLen = this.state.topics.length;
 		if (topicsLen > 0) {
 			let lastTopic = this.state.topics[topicsLen-1];
-			let lastId = lastTopic.id;
+			let lastId = lastTopic._id;
 			topicAction.loadTopicMore(lastId);
 		}
 	}

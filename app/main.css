@@ -137,6 +137,12 @@ nav a:before, .header-nav a:before {
   height: 40px;
 }
 
+.header-as img {
+  height: 30px;
+  width: 30px;
+  border-radius: 50%; 
+}
+
 nav a.animate:before, .header-nav a.animate:before {
 	width: 100%;
 }
@@ -380,6 +386,17 @@ nav a.animate:before, .header-nav a.animate:before {
 
 author {
   margin: 0 25px 0 5px;
+}
+
+author img {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+}
+
+time {
+  font-size: 0.8em;
+  color: gray;
 }
 
 .topic-title img {

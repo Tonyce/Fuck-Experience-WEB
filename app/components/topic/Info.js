@@ -21,8 +21,15 @@ class Info extends React.Component {
 		let {id} = this.props.params;
 		let {query} = this.props.location;
 		let title = query.title;
-		topicStore.changeHeader(title);
+		let author = query.author;
+			author = JSON.parse(author);
+		let obj = {
+			title: title,
+			author: author.name,
+			image: author.image
+		}
 
+		topicStore.changeHeader(obj);
 		topicStore.addChangeListener("GetTopic", this._onChange);
 		// console.log(id);
 		topicAction.loadOneTopic(id);
