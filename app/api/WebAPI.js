@@ -72,8 +72,24 @@ class WebAPI {
 			callback(data);
 		}
 		req.open("POST", "api/topic/new")
-		console.log(JSON.stringify(body))
+		// console.log(JSON.stringify(body))
 		req.send(JSON.stringify(body));	
+	}
+
+	answerTopic(answer, callback) {
+		const req = new XMLHttpRequest()
+		req.onload = function () {
+			let data = ""
+			if (req.status === 404) {
+				
+			} else {
+				data = req.response;
+			}
+			// mainAction.receiveData(data);
+			callback(data);
+		}
+		req.open("POST", "api/topic/answer")
+		req.send(JSON.stringify(answer));		
 	}
 
 	//main

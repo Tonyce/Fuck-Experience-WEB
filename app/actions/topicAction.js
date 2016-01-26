@@ -24,6 +24,10 @@ class Action {
 		WebAPI.loadTopic(id);	
 	}
 
+	answerTopic(answer, callback) {
+		WebAPI.answerTopic(answer, callback);	
+	}
+
 	loadData(url, method, body) {
 		WebAPI.loadTopicData(url, method, body);
 	}

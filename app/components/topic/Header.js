@@ -28,7 +28,7 @@ class Header extends React.Component {
 	}
 
 	_changeTitle(value) {
-		console.log(value)
+		// console.log(value)
 		if (typeof value === "object") {
 			this.setState( {
 				title: value.title,
