@@ -16,7 +16,6 @@ import TopicMain from './components/topic/Main';
 import NewTopic from './components/topic/New';
 import TopicInfo from './components/topic/Info';
 import ScheduleMain from './components/schedule/Main';
-import ScheduleItem from './components/schedule/Item';
 
 import Message from './components/Message';
 import SelfInfo from './components/SelfInfo';
@@ -344,7 +343,7 @@ ReactDOM.render((
 
 			<Route path="schedule" components={{ header: ScheduleHeader, main: ScheduleMain }}>
 				<IndexRedirect to={new Date().getDay() + ""} />
-				<Route path=":item" component={ScheduleItem} />
+				<Route path=":day" />
 			</Route>
 
 			<Route path="selfAbout" components={{ main: SelfInfo }}></Route>

@@ -8,22 +8,27 @@ import Card from '../Card'
 import mainStore from '../../stores/mainStore';
 import mainAction from '../../actions/mainAction';
 
+import Item from './Item';
+import weeker from '../../util/Weeker'
+
 class Main extends React.Component {
 
 	constructor(props) {
 		super(props);
 		this._onChange = this._onChange.bind(this);
 		this.state = {
-			card: ""
+			card: "",
+			newSchedule: "",
+			items: []
 		}
 		// console.log("about card")
 	}
 
 	componentDidMount() {
 		// console.log("about didMount")
-		const { item } = this.props.params
+		const { day } = this.props.params
 		mainStore.addChangeListener( this._onChange );
-    	mainAction.loadScheduleData(`${item}`);
+    	mainAction.loadScheduleData(`${day}`);
 	}
 
 	componentWillUnmount() {
@@ -31,20 +36,55 @@ class Main extends React.Component {
 	    mainStore.removeChangeListener( this._onChange );
 	}
 
+	newChange(e) {
+	 	this.setState({
+    		newSchedule: e.target.value
+    	})
+  	}
+
+	addNew() {
+		let year = new Date().getFullYear();
+		let weekNum = weeker.weeks();
+		let { day } = this.props.params;
+		let dayNumber = Number(day);
+		// console.log(year, weekNum, dayNumber);
+		let newItem = {
+			content: this.state.newSchedule,
+			done: false
+		}
+
+		let items = this.state.items.concat([newItem]);
+
+		this.setState( {
+			items: items,
+			newSchedule: ''
+		})
+	}
+
+	deleteItem(i, e) {
+		let items = this.state.items.splice(i, 1);
+		this.setState( {
+			items: this.state.items
+		})
+	}
+
 	_onChange() {
+
 		let scheduleContent = mainStore.getMainData();
 		scheduleContent = JSON.parse(scheduleContent);
 
 		let cardContent = scheduleContent.card;
+		let items = scheduleContent.items;
 		
 		this.setState({ 
-			card: cardContent
+			card: cardContent,
+			items: items
 		}); 
 	}
 
 	render() {
 		// const { item } = this.props.params
-		// console.log(item)
+		// console.log(this.state.items)
 		return (
 			<div>
 				<Card>
@@ -52,7 +92,18 @@ class Main extends React.Component {
 				</Card>
 
 				<div className="schedule">
-					{this.props.children}
+					<div className="flex-layout h-center flex-end">
+						<input className="new" placeholder="新建schedule" 
+							value={this.state.newSchedule} onChange={ (e)=>this.newChange(e) } />
+						<div className="add" onClick={ () => this.addNew() }>
+							+
+						</div>
+					</div>
+					<div className="items">
+						{this.state.items.map( (item, i) => {
+							return <Item key={i} i={i} item={item} deleteItem={(i, e)=>this.deleteItem(i, e)} />
+						})}
+					</div>
 				</div>
 			</div>
 		);

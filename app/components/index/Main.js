@@ -13,7 +13,7 @@ class Item extends React.Component {
 
 
 	render() {
-		let status = this.props.item.done ? "√" : "…";
+		let status = this.props.item.done ? "✔" : "…";
 		let date = new Date(this.props.item.time);
 		let time = date.Format("yyyy-MM-dd");
 		return (
