@@ -92,6 +92,57 @@ class WebAPI {
 		req.send(JSON.stringify(answer));		
 	}
 
+	//schedule
+	newSchedule(weeknum, day, content, callback) {
+		const req = new XMLHttpRequest()
+		req.onload = function () {
+			let data = ""
+			if (req.status === 404) {
+				
+			} else {
+				data = req.response;
+			}
+			// mainAction.receiveData(data);
+			callback(data);
+		}
+		req.open("POST", `api/schedule/${weeknum}/${day}`)
+		req.send(JSON.stringify({content: content}));
+	}
+
+
+	setDone(id, done, callback)  {
+		const req = new XMLHttpRequest()
+		req.onload = function () {
+			let data = ""
+			if (req.status === 404) {
+				
+			} else {
+				data = req.response;
+			}
+			// mainAction.receiveData(data);
+			callback(data);
+		}
+		req.open("PUT", `api/schedule/${id}`)
+		req.send(JSON.stringify({done: done}));
+	}
+
+	deleteItem(id, callback) {
+		const req = new XMLHttpRequest()
+		req.onload = function () {
+			let data = ""
+			if (req.status === 404) {
+				
+			} else {
+				data = req.response;
+			}
+			// mainAction.receiveData(data);
+			callback(data);
+		}
+		req.open("DELETE", `api/schedule/${id}`)
+		req.send();	
+	}
+
+
 	//main
 	loadMainData(url, method, body) {
 		const req = new XMLHttpRequest()

@@ -15,8 +15,8 @@ class MainAction {
 		this.loadData("api/topic", "GET", "");
 	}
 
-	loadScheduleData(item) {
-		this.loadData(`api/schedule/${item}`, "GET", "");
+	loadScheduleData(weekNum, day) {
+		this.loadData(`api/schedule/${weekNum}/${day}`, "GET", "");
 	}
 
 	loadData(url, method, body) {

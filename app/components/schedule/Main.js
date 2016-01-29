@@ -11,6 +11,8 @@ import mainAction from '../../actions/mainAction';
 import Item from './Item';
 import weeker from '../../util/Weeker'
 
+import WebAPI from '../../api/WebAPI';
+
 class Main extends React.Component {
 
 	constructor(props) {
@@ -26,9 +28,10 @@ class Main extends React.Component {
 
 	componentDidMount() {
 		// console.log("about didMount")
-		const { day } = this.props.params
+		let weekNum = weeker.weeks();
+		let { day } = this.props.params
 		mainStore.addChangeListener( this._onChange );
-    	mainAction.loadScheduleData(`${day}`);
+    	mainAction.loadScheduleData( weekNum, day);
 	}
 
 	componentWillUnmount() {
@@ -46,18 +49,27 @@ class Main extends React.Component {
 		let year = new Date().getFullYear();
 		let weekNum = weeker.weeks();
 		let { day } = this.props.params;
-		let dayNumber = Number(day);
+		// let dayNumber = Number(day);
 		// console.log(year, weekNum, dayNumber);
-		let newItem = {
-			content: this.state.newSchedule,
-			done: false
-		}
 
-		let items = this.state.items.concat([newItem]);
+		let content = this.state.newSchedule; 
+		WebAPI.newSchedule(weekNum, day, content,  (data) => {
+			console.log(data)	
+			data = JSON.parse(data);
+			let id = data._id;
 
-		this.setState( {
-			items: items,
-			newSchedule: ''
+			let newItem = {
+				_id: id,
+				content: content,
+				done: false
+			}
+
+			let items = this.state.items.concat([newItem]);
+
+			this.setState( {
+				items: items,
+				newSchedule: ''
+			})
 		})
 	}
 

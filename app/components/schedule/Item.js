@@ -3,6 +3,7 @@
 
 import React from 'react';
 import {render} from 'react-dom';
+import WebAPI from '../../api/WebAPI';
 
 class Item extends React.Component {
 
@@ -29,24 +30,47 @@ class Item extends React.Component {
 	}
 
 	checkbox(e) {
-		this.item.done = e.target.checked
-		// console.log(this.item)
-		// WebAPI update
-		this.setState( {
-			done: e.target.checked,
-			choseStyle: {
-				color: e.target.checked ? "#BDBDBD" : "#000000"
+		let checked = e.target.checked
+		this.item.done = checked
+		let id = this.item._id;
+		// console.log(checked);
+		WebAPI.setDone(id, checked, (data) => {
+			console.log(data)
+			data = JSON.parse(data);
+			console.log(data.ok === 1);
+			if (data.ok === 1) {
+				this.setState( {
+					done: checked,
+					choseStyle: {
+						color: checked ? "#BDBDBD" : "#000000"
+					}
+				})
+			}else {
+				this.setState( {
+					done: !checked
+				})
+				this.item.done = !checked
 			}
 		})
+		// console.log(this.item)
+		// WebAPI update
+		
 		// this.props.item.done = 
 	}
 
 	deleteItem(e){
 		let i = this.props.i;
 		// console.log("i", i)
-		if (this.props.deleteItem) {
-			this.props.deleteItem(i, e);
-		}
+		let id = this.item._id;
+		WebAPI.deleteItem(id, (data) => {
+			console.log(data)
+			data = JSON.parse(data);
+			if (data.ok === 1) {
+				if (this.props.deleteItem) {
+					this.props.deleteItem(i, e);
+				}
+			}
+		})
 	}
 
 	updateItem() {
@@ -62,7 +86,7 @@ class Item extends React.Component {
 				<div className="flex-layout h-center">
 					<input type="checkbox" checked={this.state.done} onChange={ (e) => this.checkbox(e) } />
 					<div className="content" style={this.state.choseStyle}>
-						完成schedule {this.props.item.content}	
+						{this.props.item.content}	
 					</div>
 				</div>
 				<div className="flex-layout h-center">
