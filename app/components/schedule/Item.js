@@ -65,6 +65,11 @@ class Item extends React.Component {
 		WebAPI.deleteItem(id, (data) => {
 			console.log(data)
 			data = JSON.parse(data);
+			if(data.err) {
+				alert(data.err);
+				return;
+			}
+			
 			if (data.ok === 1) {
 				if (this.props.deleteItem) {
 					this.props.deleteItem(i, e);

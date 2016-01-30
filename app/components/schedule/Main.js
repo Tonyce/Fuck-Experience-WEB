@@ -56,6 +56,12 @@ class Main extends React.Component {
 		WebAPI.newSchedule(weekNum, day, content,  (data) => {
 			console.log(data)	
 			data = JSON.parse(data);
+
+			if(data.err) {
+				alert(data.err);
+				return;
+			}
+
 			let id = data._id;
 
 			let newItem = {
